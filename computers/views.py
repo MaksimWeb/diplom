@@ -19,8 +19,5 @@ class ComputerDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 def start(request, *args, **kwargs):
-    # try:
     parsing()
     return JsonResponse({'status': 'success'})
-    # except:
-    #     return JsonResponse({'status': 'fail'})
