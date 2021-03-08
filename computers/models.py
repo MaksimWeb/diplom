@@ -20,7 +20,7 @@ class Computer(models.Model):
 
 
 class Application(models.Model):
-    application_na6ame = models.CharField(verbose_name='Название программы', max_length=500)
+    application_name = models.CharField(verbose_name='Название программы', max_length=500)
     application_version = models.CharField(verbose_name='Версия программы', max_length=200)
     computer = models.ForeignKey(Computer, on_delete=models.CASCADE, related_name='applications', null=True)
 
