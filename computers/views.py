@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
-from rest_framework import generics
+from rest_framework import generics, views
+from rest_framework.response import Response
 from .models import Computer, Application
 from .serializers import ComputerSerializer, UserSerializer, ApplicationSerializer
 from .parsing import parsing
@@ -11,19 +12,30 @@ from .scripts import script
 
 # Create your views here.
 
-class ComputerList(generics.ListCreateAPIView):
+class ComputerList(generics.ListAPIView):
     queryset = Computer.objects.all()
     serializer_class = ComputerSerializer
 
 
-class ComputerDetail(generics.RetrieveUpdateDestroyAPIView):
+class ComputerDetail(views.APIView):
     permission_classes = (IsAuthorOrReadOnly,)
-    queryset = Computer.objects.all()
+
+    def get_object(self, title):
+        return Computer.objects.get(title=title)
+
+    def get(self, request, title):
+        object = self.get_object(title)
+        serializer = ComputerSerializer(object)
+        return Response(serializer.data)
+
     serializer_class = ComputerSerializer
 
 
-class ApplicationList(generics.ListCreateAPIView):
-    queryset = Application.objects.all()
+class ApplicationList(generics.ListAPIView):
+    def get_queryset(self):
+        computer = Computer.objects.get(title=self.kwargs['title'])
+        return computer.applications.all()
+
     serializer_class = ApplicationSerializer
 
 
