@@ -48,7 +48,10 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # local
-    'computers.apps.ComputersConfig'
+    'computers.apps.ComputersConfig',
+    'quizes.apps.QuizesConfig',
+    'questions.apps.QuestionsConfig',
+    'quiz_results.apps.QuizResultsConfig',
 ]
 
 MIDDLEWARE = [
@@ -134,7 +137,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication'
     ],
-
 }
 
 CORS_ORIGIN_WHITELIST = (
