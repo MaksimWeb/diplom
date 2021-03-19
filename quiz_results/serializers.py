@@ -23,3 +23,9 @@ class ResultSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('quiz', 'user', 'score', 'created')
         model = Result
+
+
+class ResultsOnly(serializers.ModelSerializer):
+    class Meta:
+        fields = ('quiz', 'user', 'score', 'created')
+        model = Result

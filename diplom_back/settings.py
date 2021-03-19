@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 from corsheaders.defaults import default_headers
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'quizes.apps.QuizesConfig',
     'questions.apps.QuestionsConfig',
     'quiz_results.apps.QuizResultsConfig',
+    'docs.apps.DocsConfig',
 ]
 
 MIDDLEWARE = [
@@ -155,3 +157,12 @@ SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = False
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static_dev'),
+)
