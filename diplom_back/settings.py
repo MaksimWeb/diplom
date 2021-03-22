@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'questions.apps.QuestionsConfig',
     'quiz_results.apps.QuizResultsConfig',
     'docs.apps.DocsConfig',
+    'test_docs.apps.TestDocsConfig',
 ]
 
 MIDDLEWARE = [
