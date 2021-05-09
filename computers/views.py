@@ -10,6 +10,7 @@ from .permissions import IsAuthorOrReadOnly
 from .scripts import script
 
 
+
 # Create your views here.
 
 class ComputerList(generics.ListAPIView):
@@ -57,3 +58,6 @@ class UserList(generics.ListCreateAPIView):
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
+
+
+
