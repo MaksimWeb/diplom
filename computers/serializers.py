@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Computer, Application
+from .models import Computer, Application, DeletedApplications, NewApplications
 
 
 class ComputerSerializer(serializers.ModelSerializer):
@@ -16,9 +16,19 @@ class ApplicationSerializer(serializers.ModelSerializer):
         model = Application
 
 
+class NewApplicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ('application_name', 'application_version')
+        model = NewApplications
+
+
+class DeletedApplicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ('application_name', 'application_version')
+        model = DeletedApplications
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('id', 'username',)
-
-

@@ -1,4 +1,4 @@
-from .models import Application, Computer
+from .models import Application, Computer, DeletedApplications, NewApplications
 
 
 class App:
@@ -53,6 +53,7 @@ def parsing():
             newApps.append(updatedApp)
 
         newAppsCopy = newApps.copy()
+        deletedApps = []
 
         for newItem in newApps:
             for oldItem in oldApp:
@@ -66,8 +67,22 @@ def parsing():
             for newItem in newApps:
                 if oldItem.application_name == newItem.application_name:
                     newAppsCopy.remove(newItem)
+                elif oldItem.application_name != newItem.application_name:
+                    deletedApps.append(oldItem)
+
+        for deleted in deletedApps:
+            if len(deletedApps) > 0:
+                if DeletedApplications.objects.filter(application_name=deleted.application_name):
+                    continue
+                else:
+                    DeletedApplications.objects.create(application_name=deleted.application_name,
+                                                       application_version=deleted.application_version,
+                                                       computer_id=comp.id)
 
         for refresh in newAppsCopy:
             if len(newAppsCopy) > 0:
                 Application.objects.create(application_version=refresh.application_version, computer_id=comp.id,
                                            application_name=refresh.application_name)
+                NewApplications.objects.get_or_create(application_version=refresh.application_version,
+                                                      computer_id=comp.id,
+                                                      application_name=refresh.application_name)

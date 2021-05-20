@@ -25,5 +25,17 @@ class Application(models.Model):
     computer = models.ForeignKey(Computer, on_delete=models.CASCADE, related_name='applications', null=True)
 
 
+class NewApplications(models.Model):
+    application_name = models.CharField(verbose_name='Название программы', max_length=500)
+    application_version = models.CharField(verbose_name='Версия программы', max_length=200)
+    computer = models.ForeignKey(Computer, on_delete=models.CASCADE, related_name='new_applications', null=True)
+
+
+class DeletedApplications(models.Model):
+    application_name = models.CharField(verbose_name='Название программы', max_length=500)
+    application_version = models.CharField(verbose_name='Версия программы', max_length=200)
+    computer = models.ForeignKey(Computer, on_delete=models.CASCADE, related_name='deleted_applications', null=True)
+
+
 class Users(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

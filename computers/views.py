@@ -3,12 +3,12 @@ from django.contrib.auth import get_user_model
 from rest_framework import generics, views
 from rest_framework.response import Response
 from .models import Computer, Application
-from .serializers import ComputerSerializer, UserSerializer, ApplicationSerializer
+from .serializers import ComputerSerializer, UserSerializer, ApplicationSerializer, DeletedApplicationSerializer, \
+    NewApplicationSerializer
 from .parsing import parsing
 from django.http import JsonResponse
 from .permissions import IsAuthorOrReadOnly
 from .scripts import script
-
 
 
 # Create your views here.
@@ -40,6 +40,22 @@ class ApplicationList(generics.ListAPIView):
     serializer_class = ApplicationSerializer
 
 
+class NewApplicationsList(generics.ListAPIView):
+    def get_queryset(self):
+        computer = Computer.objects.get(title=self.kwargs['title'])
+        return computer.new_applications.all()
+
+    serializer_class = NewApplicationSerializer
+
+
+class DeletedApplicationsList(generics.ListAPIView):
+    def get_queryset(self):
+        computer = Computer.objects.get(title=self.kwargs['title'])
+        return computer.deleted_applications.all()
+
+    serializer_class = DeletedApplicationSerializer
+
+
 def start(request, *args, **kwargs):
     parsing()
     return JsonResponse({'status': 'success'})
@@ -58,6 +74,3 @@ class UserList(generics.ListCreateAPIView):
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
-
-
-
